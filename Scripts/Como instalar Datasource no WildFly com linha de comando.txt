@@ -1,0 +1,7 @@
+ 
+ 
+ module add --name=org.postgres --resources=c:\tmp\postgresql-9.2-1002.jdbc4.jar --dependencies=javax.api,javax.transaction.api
+ 
+ /subsystem=datasources/jdbc-driver=postgres:add(driver-name="postgres",driver-module-name="org.postgres",driver-class-name="org.postgresql.Driver")
+ 
+ data-source add --jndi-name=java:/PostgresDS --name=PostgresPool --connection-url=jdbc:postgresql://localhost/db_tremncrm --driver-name=postgres --user-name=tremn --password=123
