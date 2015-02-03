@@ -8,8 +8,8 @@ Como configurar Database Modele no WildFly
 	    <authentication>
 	        <login-module code="Database" flag="required">
 	            <module-option name="dsJndiName" value="java:/PostgresDS"/>
-	            <module-option name="principalsQuery" value="select u.password from Contact c, UserTremn u where u.contact_id=c.id and c.email=?"/>
-	            <module-option name="rolesQuery" value="select u.profile, 'Roles' from UserTremn u, Contact c where u.contact_id=c.id and c.email=?"/>
+	            <module-option name="principalsQuery" value="select u.password from UserTremn u where u.email=?" />
+	            <module-option name="rolesQuery" value="select u.profile, 'Roles' from UserTremn u where u.email=?" />
 	        </login-module>
 	    </authentication>
 	</security-domain>
