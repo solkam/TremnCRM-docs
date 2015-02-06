@@ -1,18 +1,22 @@
-Como configurar Database Modele no WildFly
+*******************************
+Como configurar JAAS no WildFly
+*******************************
 
 1) Procure a tag <subsystem xmlns="urn:jboss:domain:security:1.2">
+
 
 2) Dentro de <security-domains>, cole o seguinte trecho:
 
 	<security-domain name="TremnCRMSecurityDomain" cache-type="default">
 	    <authentication>
 	        <login-module code="Database" flag="required">
-	            <module-option name="dsJndiName" value="java:/PostgresDS"/>
+	            <module-option name="dsJndiName" value="java:/TremnCRMDS"/>
 	            <module-option name="principalsQuery" value="select u.password from UserTremn u where u.email=?" />
 	            <module-option name="rolesQuery" value="select u.profile, 'Roles' from UserTremn u where u.email=?" />
 	        </login-module>
 	    </authentication>
 	</security-domain>
+
 
 3) Em web.xml, no final do arquivo, cole o seguinte trecho:
 
@@ -48,3 +52,9 @@ Como configurar Database Modele no WildFly
 	</security-role>
 
 	
+4) Criar o arquivo jboss-web.xml em /WEB-INF com o conteudo:
+	<?xml version="1.0" encoding="UTF-8"?>
+	<jboss-web>
+		<security-domain>TremnCRMSecurityDomain</security-domain>
+	</jboss-web>
+  	
