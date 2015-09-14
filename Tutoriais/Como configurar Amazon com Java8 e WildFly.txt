@@ -1,0 +1,98 @@
+Passo 0: 
+>> Pelo console web da AMZ: 
+-- criar uma instancia de Linux Ubuntu com porte medio. 
+-- Atribuir um Elastic IP
+
+
+- Entrar via ssh (com arquivo .pem) e executar os seguintes comandos:
+
+
+>> Atualizando o Linux:
+sudo apt-get update
+
+
+>> Desinstalando JDK 8 (se tiver java 8 instalado):
+apt-get --purge remove oracle-java8-installer
+
+
+>> Instalando JDK 8:
+sudo apt-get install python-software-properties
+sudo add-apt-repository ppa:webupd8team/java
+sudo apt-get update
+
+sudo apt-get install oracle-java8-installer
+
+Por default, é considerado o TimeZone de Londres. Para alterar, use:
+sudo dpkg-reconfigure tzdata
+
+
+>> MySQL Server
+sudo apt-get install mysql-server
+(usar senha do aliado ave)
+
+Verificando se o servico do mysql está no ar:
+sudo netstat -tap | grep mysql
+
+
+(mysql deve ser reiniciado)
+
+
+Entrar no mysql como root, criar usuario tremncrm e database db_tremncrm
+
+
+>> WildFly
+wget http://download.jboss.org/wildfly/8.2.1.Final/wildfly-8.2.1.Final.zip
+unzip wildfly-8.2.1.Final.zip
+
+
+
+
+Va para o diretorio bin e deixe executando:
+./standalone.sh
+
+) Usuario para o Administration Console
+Entre outra janela, va para o bin e execute:
+add-user.sh
+
+
+) Datasource MySQL por linha de comando (passo 1)
+Ainda em bin, entre no jboss-cli e execute os comandos:
+./jboss-cli.sh --connect
+ /subsystem=datasources/jdbc-driver=mysql:add(driver-name="mysql",driver-module-name="com.mysql",driver-class-name="com.mysql.jdbc.Driver",driver-xa-datasource-class-name="com.mysql.jdbc.jdbc2.optional.MysqlXADataSource")
+
+
+) Datasource MySQL pelo Administration Console (passo 2)
+Na janela que está executando o JBoss, ele deve ser parado com Ctrl+C:
+./standalone.sh -b=<IP> -bmanagement=<IP>
+
+Entre no admin console, em Profile > Datasource. Clique na aba XA-DataSources e crie um datasource com JNDI: java:/mundocbDS
+Em Properties: adicione "ServerName" e "DatabaseName"
+Teste a conexao para verificar que tudo está OK
+
+
+) Mail:
+No Admin Console: va em Mail e digite as credenciais da conta do gmail.
+
+Para o JBoss e editar standalone.xml troca as linhas:
+<remote-destination host="localhost" port="25"/>
+por
+<remote-destination host="smtp.gmail.com" port="465"/>
+
+Inicie JBoss:
+./standalone.sh -b=<IP> -bmanagement=<IP>
+
+
+
+) Deployment:
+Copie o war para a pasta de deployment e veja no console se tudo foi OK
+
+) Passo final:
+Pare o JBoss e reinicie com 'nohup':
+nohup ./standalone.sh -b=<IP> -bmanagement=<IP>
+
+
+
+
+
+
+
