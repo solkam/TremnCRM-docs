@@ -1,0 +1,7 @@
+1) Criar um arquivo .sh com o seguinte conteudo
+
+#!/bin/sh
+
+mysqldump -u solkam -pPuma db_tremncb --complete-insert > /home/tremn/backups/mysql_tremn_`date +%Y_%m_%d`.sql
+
+2) Copiar /etc/cron.daily
