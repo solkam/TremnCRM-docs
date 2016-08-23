@@ -2,6 +2,10 @@
 Como Instalar Datasource no WildFly com linha de comando
 ********************************************************
 
+0) Criar um usuario administrador no WildFly com add-user.sh
+usuario: solkam
+pass: sas
+
 
 // POSTGRES \\
 ************** 
@@ -17,13 +21,13 @@ Como Instalar Datasource no WildFly com linha de comando
 
 // MYSQL \\
 *********** 
- obs: Se nao criou usuario no BD, criar com grant all privileges on *.* to 'farakian'@'localhost' identified by 'Tremnj7j@@'
+ obs: Se nao criou usuario no BD, criar com: grant all privileges on *.* to 'farakian'@'localhost' identified by 'j7j@@';
  
  
- module add --name=com.mysql --resources=c:\tmp\mysql-connector-java-5.1.36-bin.jar --dependencies=javax.api,javax.transaction.api
+ module add --name=com.mysql --resources=c:\SOFTWARES\mysql-connector-java-5.1.36-bin.jar --dependencies=javax.api,javax.transaction.api
  
  /subsystem=datasources/jdbc-driver=mysql:add(driver-name="mysql",driver-module-name="com.mysql",driver-class-name="com.mysql.jdbc.Driver")
  
- data-source add --jndi-name=java:/TremnCRMDS --name=MySQLPool --connection-url=jdbc:mysql://localhost/db_tremncrm --driver-name=mysql --user-name=farakian --password=Tremnj7j@@
+ data-source add --jndi-name=java:/TremnCRMDS --name=MySQLPool --connection-url=jdbc:mysql://localhost/db_tremncrm --driver-name=mysql --user-name=farakian --password=j7j@@
  
  
